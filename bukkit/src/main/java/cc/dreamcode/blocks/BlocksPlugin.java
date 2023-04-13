@@ -1,5 +1,9 @@
-package cc.dreamcode.template;
+package cc.dreamcode.blocks;
 
+import cc.dreamcode.blocks.command.BlocksCommand;
+import cc.dreamcode.blocks.config.PluginConfig;
+import cc.dreamcode.blocks.controller.MenuController;
+import cc.dreamcode.blocks.service.BlocksService;
 import cc.dreamcode.command.bukkit.BukkitCommandProvider;
 import cc.dreamcode.menu.bukkit.BukkitMenuProvider;
 import cc.dreamcode.menu.bukkit.okaeri.MenuBuilderSerdes;
@@ -12,30 +16,26 @@ import cc.dreamcode.platform.bukkit.component.ConfigurationComponentResolver;
 import cc.dreamcode.platform.bukkit.component.ListenerComponentResolver;
 import cc.dreamcode.platform.bukkit.component.RunnableComponentResolver;
 import cc.dreamcode.platform.component.ComponentManager;
+import cc.dreamcode.blocks.config.MessageConfig;
+
 import cc.dreamcode.platform.persistence.resolver.DocumentPersistenceComponentResolver;
 import cc.dreamcode.platform.persistence.resolver.DocumentRepositoryComponentResolver;
-import cc.dreamcode.template.config.MessageConfig;
-import cc.dreamcode.template.config.PluginConfig;
-import cc.dreamcode.template.mcversion.VersionProvider;
-import cc.dreamcode.template.user.UserRepository;
 import eu.okaeri.configs.serdes.OkaeriSerdesPack;
-import eu.okaeri.persistence.document.DocumentPersistence;
 import eu.okaeri.tasker.bukkit.BukkitTasker;
 import lombok.Getter;
 import lombok.NonNull;
 
-public final class BukkitTemplatePlugin extends DreamBukkitPlatform {
+public final class BlocksPlugin extends DreamBukkitPlatform {
 
-    @Getter private static BukkitTemplatePlugin bukkitTemplatePlugin;
+    @Getter private static BlocksPlugin blocksPlugin;
 
     @Override
     public void load(@NonNull ComponentManager componentManager) {
-        bukkitTemplatePlugin = this;
+        blocksPlugin = this;
     }
 
     @Override
     public void enable(@NonNull ComponentManager componentManager) {
-        this.registerInjectable(VersionProvider.getVersionAccessor());
         this.registerInjectable(BukkitTasker.newPool(this));
         this.registerInjectable(BukkitMenuProvider.create(this));
         this.registerInjectable(BukkitNoticeProvider.create(this));
@@ -51,27 +51,23 @@ public final class BukkitTemplatePlugin extends DreamBukkitPlatform {
                     bukkitCommandProvider.setRequiredPermissionMessage(messageConfig.noPermission);
                     bukkitCommandProvider.setRequiredPlayerMessage(messageConfig.notPlayer);
                 }));
-
-        componentManager.registerComponent(PluginConfig.class, pluginConfig -> {
-            // register persistence + repositories
-            this.registerInjectable(pluginConfig.storageConfig);
-
+        componentManager.registerComponent(PluginConfig.class, (pluginConfig) -> {
             componentManager.registerResolver(DocumentPersistenceComponentResolver.class);
             componentManager.registerResolver(DocumentRepositoryComponentResolver.class);
-
-            componentManager.registerComponent(DocumentPersistence.class);
-            componentManager.registerComponent(UserRepository.class);
         });
+
+        componentManager.registerComponent(BlocksService.class, BlocksService::setup);
+        componentManager.registerComponent(MenuController.class);
+        componentManager.registerComponent(BlocksCommand.class);
     }
 
     @Override
     public void disable() {
-        // features need to be call when server is stopping
     }
 
     @Override
     public @NonNull DreamVersion getDreamVersion() {
-        return DreamVersion.create("Dream-Template", "1.0-InDEV", "author");
+        return DreamVersion.create("Dream-Blocks", "1.0", "Nightusio");
     }
 
     @Override

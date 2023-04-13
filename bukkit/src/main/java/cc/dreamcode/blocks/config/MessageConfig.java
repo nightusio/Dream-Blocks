@@ -1,4 +1,4 @@
-package cc.dreamcode.template.config;
+package cc.dreamcode.blocks.config;
 
 import cc.dreamcode.notice.NoticeType;
 import cc.dreamcode.notice.bukkit.BukkitNotice;
@@ -14,7 +14,7 @@ import eu.okaeri.configs.annotation.Names;
         child = "message.yml"
 )
 @Headers({
-        @Header("## Dream-Template (Message-Config) ##"),
+        @Header("## Dream-Blocks (Message-Config) ##"),
         @Header("Dostepne type: (DO_NOT_SEND, CHAT, ACTION_BAR, SUBTITLE, TITLE, TITLE_SUBTITLE)")
 })
 @Names(strategy = NameStrategy.HYPHEN_CASE, modifier = NameModifier.TO_LOWER_CASE)

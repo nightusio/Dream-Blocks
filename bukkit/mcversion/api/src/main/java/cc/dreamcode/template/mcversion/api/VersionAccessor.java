@@ -1,4 +1,4 @@
-package cc.dreamcode.template.mcversion.api;
+package cc.dreamcode.blocks.mcversion.api;
 
 public interface VersionAccessor {
 }
