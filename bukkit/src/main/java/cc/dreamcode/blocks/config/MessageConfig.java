@@ -27,6 +27,8 @@ public class MessageConfig extends OkaeriConfig {
     public BukkitNotice notPlayer = new BukkitNotice(NoticeType.CHAT, "&4Nie jestes graczem.");
     public BukkitNotice notNumber = new BukkitNotice(NoticeType.CHAT, "&4Podana liczba &cnie jest cyfra.");
     public BukkitNotice playerIsMe = new BukkitNotice(NoticeType.CHAT, "&4Nie rob tego &cna sobie.");
-    
+
+    public BukkitNotice noIronToExchange = new BukkitNotice(NoticeType.CHAT, "&4Nie masz wystarczajaco zelaza aby je wymienic!");
+    public BukkitNotice ironSuccessfullyExchanged = new BukkitNotice(NoticeType.CHAT, "&aPomyslnie wymieniles swoje zelazo!");
 
 }
