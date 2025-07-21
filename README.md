@@ -1,11 +1,7 @@
-Working with template:
+dream-blocks:
 -----
-Clone this repo to your account, rename package name, then by pressing ``CTRL + SHIFT + R`` change all variables to your plugin name. (Template --> PluginName).
+Some old plugin, making my old repositories public.
 
-Finally, remove all **unnecessary** template functions.
-(support mc versions can easily removed by deleting implement in settings.gradle)
-
-Read all comment above method/class/reference to find out what it means and how to use it -
 Build to jar by ``shadowJar`` gradle task.
 
 **Required:**
